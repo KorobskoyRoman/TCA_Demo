@@ -11,6 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct AddContactReducer {
 
+   @ObservableState
    struct State: Equatable {
       var contact: Contact
    }
@@ -19,7 +20,15 @@ struct AddContactReducer {
       case setName(String)
       case cancelButtonTapped
       case saveButtonTapped
+      case delegate(Delegate)
+
+      enum Delegate: Equatable {
+         case saveContact(Contact)
+      }
    }
+
+   @Dependency(\.dismiss)
+   var dismiss
 
    var body: some ReducerOf<Self> {
       Reduce { state, action in
@@ -29,10 +38,16 @@ struct AddContactReducer {
             return .none
 
          case .cancelButtonTapped:
+            return .run { _ in await self.dismiss() }
+
+         case .delegate:
             return .none
 
          case .saveButtonTapped:
-            return .none
+            return .run { [contact = state.contact] send in
+               await send(.delegate(.saveContact(contact)))
+               await self.dismiss()
+            }
          }
       }
    }

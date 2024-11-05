@@ -6,13 +6,50 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ContactsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+
+   @Bindable var store: StoreOf<ContactsReducer>
+
+   var body: some View {
+      NavigationStack {
+         List {
+            ForEach(store.contacts) { contact in
+               Text(contact.name)
+            }
+         }
+         .navigationTitle("Contacts")
+         .toolbar {
+            ToolbarItem {
+               Button {
+                  store.send(.addButtonTapped)
+               } label: {
+                  Image(systemName: "plus")
+               }
+            }
+         }
+      }
+      .sheet(item: $store.scope(state: \.addContact, action: \.addContact)) { addContactsStore in
+         NavigationStack {
+            AddContactView(store: addContactsStore)
+         }
+      }
+   }
 }
 
 #Preview {
-    ContactsView()
+  ContactsView(
+    store: Store(
+      initialState: ContactsReducer.State(
+        contacts: [
+          Contact(id: UUID(), name: "Blob"),
+          Contact(id: UUID(), name: "Blob Jr"),
+          Contact(id: UUID(), name: "Blob Sr"),
+        ]
+      )
+    ) {
+       ContactsReducer()
+    }
+  )
 }

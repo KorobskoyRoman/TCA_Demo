@@ -6,13 +6,44 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct AddContactView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+
+   @Bindable var store: StoreOf<AddContactReducer>
+
+
+   var body: some View {
+      Form {
+         TextField("Name", text: $store.contact.name.sending(\.setName))
+
+         Button("Save") {
+            store.send(.saveButtonTapped)
+         }
+      }
+      .toolbar {
+         ToolbarItem {
+            Button("Cancel") {
+               store.send(.cancelButtonTapped)
+            }
+         }
+      }
+   }
 }
 
 #Preview {
-    AddContactView()
+   NavigationStack {
+      AddContactView(
+         store: Store(
+            initialState: AddContactReducer.State(
+               contact: Contact(
+                  id: UUID(),
+                  name: "Blob"
+               )
+            )
+         ) {
+            AddContactReducer()
+         }
+      )
+   }
 }

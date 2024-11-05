@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9CC31C512CD8DB2C00597769 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 9CC31C502CD8DB2C00597769 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9CC31C332CD8D93400597769 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CC31C512CD8DB2C00597769 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = TCA_Demo;
 			packageProductDependencies = (
+				9CC31C502CD8DB2C00597769 /* ComposableArchitecture */,
 			);
 			productName = TCA_Demo;
 			productReference = 9CC31C222CD8D93200597769 /* TCA_Demo.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 9CC31C192CD8D93200597769;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9CC31C4F2CD8DB2C00597769 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9CC31C232CD8D93200597769 /* Products */;
 			projectDirPath = "";
@@ -321,6 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"INFOPLIST_FILE[sdk=*]" = "/Users/romankorobskoy/Documents/untitled folder/TCA_Demo/TCA_Demo/info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -378,6 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"INFOPLIST_FILE[sdk=*]" = "/Users/romankorobskoy/Documents/untitled folder/TCA_Demo/TCA_Demo/info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -558,6 +569,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9CC31C4F2CD8DB2C00597769 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9CC31C502CD8DB2C00597769 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CC31C4F2CD8DB2C00597769 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9CC31C1A2CD8D93200597769 /* Project object */;
 }
