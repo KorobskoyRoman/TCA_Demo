@@ -13,10 +13,22 @@ struct ContactsView: View {
    @Bindable var store: StoreOf<ContactsReducer>
 
    var body: some View {
-      NavigationStack {
+      NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
          List {
             ForEach(store.contacts) { contact in
-               Text(contact.name)
+               NavigationLink(state: ContactDetailsReducer.State(contact: contact)) {
+                  HStack {
+                     Text(contact.name)
+                     Spacer()
+                     Button {
+                        store.send(.deleteButtonTapped(id: contact.id))
+                     } label: {
+                        Image(systemName: "trash")
+                           .foregroundColor(.red)
+                     }
+                  }
+               }
+               .buttonStyle(.borderless)
             }
          }
          .navigationTitle("Contacts")
@@ -29,27 +41,32 @@ struct ContactsView: View {
                }
             }
          }
+      } destination: { store in
+         ContactDetailsView(store: store)
       }
-      .sheet(item: $store.scope(state: \.addContact, action: \.addContact)) { addContactsStore in
+      .sheet(
+         item: $store.scope(state: \.destination?.addContact, action: \.destination.addContact)
+      ) { addContactStore in
          NavigationStack {
-            AddContactView(store: addContactsStore)
+            AddContactView(store: addContactStore)
          }
       }
+      .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
    }
 }
 
 #Preview {
-  ContactsView(
-    store: Store(
-      initialState: ContactsReducer.State(
-        contacts: [
-          Contact(id: UUID(), name: "Blob"),
-          Contact(id: UUID(), name: "Blob Jr"),
-          Contact(id: UUID(), name: "Blob Sr"),
-        ]
-      )
-    ) {
-       ContactsReducer()
-    }
-  )
+   ContactsView(
+      store: Store(
+         initialState: ContactsReducer.State(
+            contacts: [
+               Contact(id: UUID(), name: "Blob"),
+               Contact(id: UUID(), name: "Blob Jr"),
+               Contact(id: UUID(), name: "Blob Sr"),
+            ]
+         )
+      ) {
+         ContactsReducer()
+      }
+   )
 }

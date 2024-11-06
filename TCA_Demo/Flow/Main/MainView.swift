@@ -22,6 +22,11 @@ struct MainView: View {
             .tabItem {
                Text("Counter 2")
             }
+
+         ContactsView(store: store.scope(state: \.tab3, action: \.tab3))
+            .tabItem {
+               Text("Contacts")
+            }
       }
    }
 }
